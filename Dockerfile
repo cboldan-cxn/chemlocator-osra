@@ -44,11 +44,13 @@ RUN cd /tmp/gocr \
 RUN cd /tmp/OSRA \
     && tar -zxvf osra-2.1.1.tgz \
     && cd /tmp/OSRA/osra-2.1.1 \
-    && ./configure --with-tesseract --with-potrace-lib \
+    && ./configure --with-tesseract --with-potrace-lib --with-openbabel-include="/usr/include/openbabel3" --with-openbabel-lib="/usr/lib/openbabel/3.0.0"\
     && make all \
     && make install
     
 RUN cd && rm -rf /tmp/OSRA && rm -rf /tmp/gocr
+RUN cp -rs /usr/lib/openbabel/3.0.0/* /usr/local/bin
+RUN cp -rs /usr/lib/GraphicsMagick-1.3.35/config/* /usr/local/bin
 
 LABEL com.chemaxon.version=$BUILD_NUMBER \
       com.chemaxon.date=$BUILD_DATE \
